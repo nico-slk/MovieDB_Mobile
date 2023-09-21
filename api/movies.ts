@@ -25,4 +25,26 @@ export const MovieService = {
       throw new Error(message);
     }
   },
+  getPlayingNowMovies: async (page: string) => {
+    try {
+      const fetchData = await fetch(`${URL_MOVIE}/now_playing?api_key=${API_KEY}&page=${page}`);
+      const resp = await fetchData.json();
+      return resp;
+    } catch (e) {
+      let message = 'Unknown Error';
+      if (e instanceof Error) { message = e.message; }
+      throw new Error(message);
+    }
+  },
+  getMostPopularMovies: async (page: string) => {
+    try {
+      const fetchData = await fetch(`${URL_MOVIE}/popular?api_key=${API_KEY}&page=${page}`);
+      const resp = await fetchData.json();
+      return resp;
+    } catch (e) {
+      let message = 'Unknown Error';
+      if (e instanceof Error) { message = e.message; }
+      throw new Error(message);
+    }
+  },
 };

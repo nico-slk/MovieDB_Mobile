@@ -1,46 +1,63 @@
 // import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ActivityIndicator, Dimensions, Text, View } from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Carousel from 'react-native-snap-carousel';
+import useMostPopularMovies from '../../customHooks/useMostPopularMovies';
 import useMoviesList from '../../customHooks/useMoviesList';
+import usePlayingNowMovies from '../../customHooks/usePlayingNowMovies';
+import HorizontalSlide from '../slides/HorizontalSlide';
 import MoviePoster from './MoviePoster';
 
 const { width: windowWidth } = Dimensions.get('window');
 
 const Home = () => {
-  // const navigation = useNavigation<any>();
   const { top } = useSafeAreaInsets();
 
   const { moviesList, isLoading } = useMoviesList();
+  const { playingNowMovies, isLoadingPlayingNowMovies } = usePlayingNowMovies();
+  const { mostPopularMovies, isLoadingMostPopularMovies } = useMostPopularMovies();
 
-  if (isLoading && !moviesList) {
+  if (isLoading && !moviesList && isLoadingPlayingNowMovies && isLoadingMostPopularMovies) {
     return <View>
       <ActivityIndicator color="red" size={50} />
     </View>;
   }
 
   return (
-    <View style={{ marginTop: top + 20 }}>
-      <Text>Home</Text>
-      <Text>{`
-      ${moviesList?.results[3]?.original_title}
-      ${moviesList?.results[3]?.overview}
-      ${moviesList?.results[3]?.poster_path}
-      `}</Text>
+    <ScrollView >
+      <View style={{ marginTop: top + 20 }}>
+        <Text>Movie DB</Text>
 
-      <View style={{ height: 400 }}>
-        <Carousel
-          data={moviesList ? moviesList.results : []}
-          renderItem={({ item }) => <MoviePoster
-            movie={item}
-          />}
-          sliderWidth={windowWidth}
-          itemWidth={200}
-        />
+        <View style={{
+          borderWidth: 2,
+          paddingVertical: 10,
+        }}>
+          <Text style={{
+            paddingHorizontal: 20,
+            marginBottom: 20,
+          }}>Most popular</Text>
+          <View style={{
+            width: windowWidth,
+            borderWidth: 2,
+            height: 450,
+          }}>
+            <Carousel
+              data={moviesList ? moviesList.results : []}
+              renderItem={({ item }) => <MoviePoster
+                movie={item}
+              />}
+              sliderWidth={windowWidth}
+              itemWidth={240}
+            />
+          </View>
 
+          <HorizontalSlide title={'Playing now'} movieList={playingNowMovies} />
+          <HorizontalSlide title={'Most popular'} movieList={mostPopularMovies} />
+
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 
 
