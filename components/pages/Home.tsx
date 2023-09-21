@@ -3,9 +3,7 @@ import React from 'react';
 import { ActivityIndicator, Dimensions, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Carousel from 'react-native-snap-carousel';
-import useMostPopularMovies from '../../customHooks/useMostPopularMovies';
-import useMoviesList from '../../customHooks/useMoviesList';
-import usePlayingNowMovies from '../../customHooks/usePlayingNowMovies';
+import { useMovie } from '../../customHooks/useMovie';
 import HorizontalSlide from '../slides/HorizontalSlide';
 import MoviePoster from './MoviePoster';
 
@@ -14,11 +12,9 @@ const { width: windowWidth } = Dimensions.get('window');
 const Home = () => {
   const { top } = useSafeAreaInsets();
 
-  const { moviesList, isLoading } = useMoviesList();
-  const { playingNowMovies, isLoadingPlayingNowMovies } = usePlayingNowMovies();
-  const { mostPopularMovies, isLoadingMostPopularMovies } = useMostPopularMovies();
+  const { mostPopular, topRated, playingNow, isLoading } = useMovie();
 
-  if (isLoading && !moviesList && isLoadingPlayingNowMovies && isLoadingMostPopularMovies) {
+  if (isLoading) {
     return <View>
       <ActivityIndicator color="red" size={50} />
     </View>;
@@ -30,20 +26,21 @@ const Home = () => {
         <Text>Movie DB</Text>
 
         <View style={{
-          borderWidth: 2,
           paddingVertical: 10,
         }}>
           <Text style={{
             paddingHorizontal: 20,
-            marginBottom: 20,
-          }}>Most popular</Text>
+            marginBottom: 10,
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: '#000',
+          }}>Top rated</Text>
           <View style={{
             width: windowWidth,
-            borderWidth: 2,
             height: 450,
           }}>
             <Carousel
-              data={moviesList ? moviesList.results : []}
+              data={topRated}
               renderItem={({ item }) => <MoviePoster
                 movie={item}
               />}
@@ -52,8 +49,8 @@ const Home = () => {
             />
           </View>
 
-          <HorizontalSlide title={'Playing now'} movieList={playingNowMovies} />
-          <HorizontalSlide title={'Most popular'} movieList={mostPopularMovies} />
+          <HorizontalSlide title={'Playing now'} movieList={playingNow} />
+          <HorizontalSlide title={'Most popular'} movieList={mostPopular} />
 
         </View>
       </View>

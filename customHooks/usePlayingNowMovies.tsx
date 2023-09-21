@@ -6,7 +6,7 @@ const usePlayingNowMovies = () => {
   const [playingNowMovies, setPlayingNowMovies] = useState<MovieListInterface>();
   const [isLoadingPlayingNowMovies, setIsLoadingPlayingNowMovies] = useState<boolean>(true);
 
-  const getTopRatedMovies = async () => {
+  const getPlayingNowMovies = async () => {
     await setTimeout(async () => {
       const fetchData = await MovieService.getPlayingNowMovies('1');
       await setPlayingNowMovies(fetchData);
@@ -15,7 +15,7 @@ const usePlayingNowMovies = () => {
   };
 
   useEffect(() => {
-    getTopRatedMovies();
+    getPlayingNowMovies();
   }, []);
 
   return {

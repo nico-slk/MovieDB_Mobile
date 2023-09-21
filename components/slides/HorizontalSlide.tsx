@@ -1,14 +1,13 @@
 import React from 'react';
 import { Dimensions, FlatList, Text, View } from 'react-native';
-import { Movie, MovieListInterface } from '../../interfaces/movieListInterface';
+import { Movie } from '../../interfaces/movieListInterface';
 import MoviePoster from '../pages/MoviePoster';
 
 const { width: windowWidth } = Dimensions.get('window');
 
 interface HorizontalSlideProps {
   title: string;
-  movie?: Movie;
-  movieList?: MovieListInterface;
+  movieList?: Movie[];
 }
 
 const HorizontalSlide = ({ title, movieList }: HorizontalSlideProps) => {
@@ -18,14 +17,16 @@ const HorizontalSlide = ({ title, movieList }: HorizontalSlideProps) => {
         <Text style={{
           paddingHorizontal: 20,
           marginVertical: 10,
+          fontWeight: 'bold',
+          fontSize: 24,
+          color: '#000',
         }}>{title}</Text>
         <View style={{
           width: windowWidth,
-          borderWidth: 2,
           height: 300,
         }}>
           <FlatList
-            data={movieList ? movieList.results : []}
+            data={movieList}
             renderItem={({ item }) => <MoviePoster
               movie={item}
               height={240}

@@ -44,8 +44,8 @@ const MoviePoster = ({ movie, height = 400, width = 240 }: MovieProps) => {
             borderRadius: 18,
           }}
         />
-
       </View>
+      {/* <Text>HOLA SOY UN TEXTO</Text> */}
     </View>
   );
 };
