@@ -52,6 +52,7 @@ const Home = () => {
               />}
               sliderWidth={windowWidth}
               itemWidth={240}
+            // inactiveSlideOpacity={0.9}
             />
           </View>
 

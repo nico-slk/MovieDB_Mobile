@@ -2,8 +2,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Home from '../components/pages/Home';
 import MovieDetail from '../components/pages/MovieDetail';
+import { Movie } from '../interfaces/movieListInterface';
 
-const Stack = createStackNavigator();
+export type StackNavigationProps = {
+  Home: undefined;
+  MovieDetail: Movie;
+};
+
+const Stack = createStackNavigator<StackNavigationProps>();
 
 const StackNav = () => {
   return (
@@ -18,7 +24,7 @@ const StackNav = () => {
       }}
     >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Movie detail" component={MovieDetail} />
+      <Stack.Screen name="MovieDetail" component={MovieDetail} />
     </Stack.Navigator>
   );
 };
