@@ -12,7 +12,7 @@ const { width: windowWidth } = Dimensions.get('window');
 const Home = () => {
   const { top } = useSafeAreaInsets();
 
-  const { mostPopular, topRated, playingNow, isLoading } = useMovie();
+  const { mostPopular, topRated, playingNow, upcomingMovies, isLoading } = useMovie();
 
   if (isLoading) {
     return <View>
@@ -23,7 +23,13 @@ const Home = () => {
   return (
     <ScrollView >
       <View style={{ marginTop: top + 20 }}>
-        <Text>Movie DB</Text>
+        <Text style={{
+          paddingHorizontal: 20,
+          marginBottom: 10,
+          fontSize: 48,
+          fontWeight: 'bold',
+          color: '#000',
+        }}>Movie DB</Text>
 
         <View style={{
           paddingVertical: 10,
@@ -51,6 +57,7 @@ const Home = () => {
 
           <HorizontalSlide title={'Playing now'} movieList={playingNow} />
           <HorizontalSlide title={'Most popular'} movieList={mostPopular} />
+          <HorizontalSlide title={'Upcoming movies'} movieList={upcomingMovies} />
 
         </View>
       </View>

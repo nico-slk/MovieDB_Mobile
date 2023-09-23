@@ -47,4 +47,15 @@ export const MovieService = {
       throw new Error(message);
     }
   },
+  getUpcomingMovies: async (page: string) => {
+    try {
+      const fetchData = await fetch(`${URL_MOVIE}/upcoming?api_key=${API_KEY}&page=${page}`);
+      const resp = await fetchData.json();
+      return resp;
+    } catch (e) {
+      let message = 'Unknown Error';
+      if (e instanceof Error) { message = e.message; }
+      throw new Error(message);
+    }
+  },
 };
